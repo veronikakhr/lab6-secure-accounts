@@ -1,0 +1,6 @@
+Django[argon2]>=5.2,<5.3
+Authlib>=1.6,<2
+requests>=2.32,<3
+pyotp>=2.9,<3
+qrcode>=8,<9
+Pillow>=11,<13

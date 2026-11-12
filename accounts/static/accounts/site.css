@@ -1,0 +1,45 @@
+:root {
+  color: #162439;
+  background: #f2f5f8;
+  font: 16px/1.5 "Inter", system-ui, sans-serif;
+  --ink: #162439;
+  --blue: #17437b;
+  --line: #d8e1eb;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: var(--blue); }
+.frame { width: min(100% - 32px, 1060px); margin-inline: auto; }
+.top { background: white; border-bottom: 1px solid var(--line); }
+.nav, nav { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.nav { justify-content: space-between; min-height: 66px; padding-block: 9px; }
+.nav a, .plain { text-decoration: none; }
+.brand { color: var(--ink); font-weight: 750; }
+main { padding-block: 40px; }
+.hero, .panel { background: white; border: 1px solid var(--line); border-radius: 16px; padding: clamp(20px, 5vw, 40px); margin-bottom: 18px; }
+.hero { background: #142c49; color: white; padding-block: clamp(40px, 10vw, 100px); }
+.hero h1 { font: 700 clamp(42px, 8vw, 74px)/1 Georgia, serif; }
+.hero p { max-width: 52ch; margin-bottom: 27px; color: #dce9f8; }
+.hero .button { background: #f4d26b; color: #1b2634; }
+.secondary { color: white; display: inline-block; margin: 8px 12px; }
+h1, h2 { line-height: 1.15; margin: 0 0 18px; }
+.form-panel { max-width: 480px; margin-inline: auto; }
+label, input { display: block; }
+label { margin-bottom: 4px; font-weight: 650; }
+input { width: 100%; font: inherit; border: 1px solid #aabbd1; border-radius: 8px; padding: 10px 12px; margin-bottom: 16px; }
+button, .button { display: inline-block; background: var(--blue); color: white; border: 1px solid var(--blue); border-radius: 8px; padding: 9px 15px; font: inherit; font-weight: 650; text-decoration: none; cursor: pointer; }
+.compact { padding: 6px 10px; font-size: .9rem; }
+.plain, .outline { color: var(--blue); background: white; }
+.plain { border-color: transparent; padding: 0; }
+.notice { background: #e8f4ee; border-left: 4px solid #2d7553; padding: 10px 14px; }
+.notice.error { background: #fdebe8; border-left-color: #a02d23; }
+.captcha, .qr { display: block; max-width: 100%; margin: 10px 0; }
+.qr { width: 190px; }
+dl { display: grid; grid-template-columns: max-content 1fr; gap: 8px 20px; margin-bottom: 22px; }
+dt, th { font-weight: 650; }
+dd { margin: 0; overflow-wrap: anywhere; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; }
+td, th { padding: 8px 12px; border-bottom: 1px solid var(--line); }
+code { color: #2b4b70; }
+@media (max-width: 540px) { dl { grid-template-columns: 1fr; } }

@@ -1,0 +1,27 @@
+{% extends "accounts/base.html" %}
+{% block title %}{{ title }} · Історія України{% endblock %}
+{% block content %}
+<section class="panel form-panel">
+  <h1>{{ title }}</h1>
+  {% if error %}<p class="notice error" role="alert">{{ error }}</p>{% endif %}
+  {% if button %}
+  <form method="post">
+    {% csrf_token %}
+    {% if qr %}
+    <p>Відскануй QR-код у застосунку автентифікації та введи шестизначний код.</p>
+    <img class="qr" src="data:image/svg+xml;base64,{{ qr }}" alt="QR-код налаштування 2FA">
+    {% endif %}
+    {% for name, label, kind, value in fields %}
+      {% if name == 'captcha' %}<img class="captcha" src="data:image/png;base64,{{ captcha }}" alt="Перевірочне зображення CAPTCHA">{% endif %}
+      <label for="{{ name }}">{{ label }}</label>
+      <input id="{{ name }}" name="{{ name }}" type="{{ kind }}" value="{{ value }}" {% if name == 'code' %}inputmode="numeric" maxlength="6" autocomplete="one-time-code"{% endif %} {% if name == 'password' %}maxlength="128" autocomplete="{% if login_links %}current-password{% else %}new-password{% endif %}"{% endif %} required>
+    {% endfor %}
+    <button>{{ button }}</button>
+  </form>
+  {% endif %}
+  {% if login_links %}
+  <p><a href="{% url 'forgot' %}">Забула пароль</a></p>
+  {% if google %}<a class="button outline" href="{% url 'google_start' %}">Увійти через Google</a>{% endif %}
+  {% endif %}
+</section>
+{% endblock %}

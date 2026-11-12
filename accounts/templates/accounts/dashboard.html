@@ -1,0 +1,46 @@
+{% extends "accounts/base.html" %}
+{% block title %}Керування · Історія України{% endblock %}
+{% block content %}
+<section class="panel">
+  <h1>Керування акаунтами</h1>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Пошта</th><th>Роль</th><th>Активація</th><th>Статус входу</th><th>Дія</th></tr></thead>
+    <tbody>
+      {% now "YmdHis" as current %}
+      {% for item in users %}
+      <tr>
+        <td>{{ item.email }}</td><td>{% if item.is_staff %}Адміністратор{% else %}Користувач{% endif %}</td>
+        <td>{% if item.email_verified %}Підтверджено{% else %}Очікує{% endif %}</td>
+        {% with lock=item.locked_until|date:"YmdHis" %}
+        <td>{% if item.blocked %}Заблоковано адміністратором{% elif lock > current %}Тимчасово заблоковано{% else %}Дозволено{% endif %}</td>
+        <td>
+          {% if not item.is_staff %}
+            {% if item.blocked or lock > current %}
+            <form method="post" action="{% url 'change_account' item.pk 'unblock' %}">{% csrf_token %}<button class="compact">Розблокувати</button></form>
+            {% else %}
+            <form method="post" action="{% url 'change_account' item.pk 'block' %}">{% csrf_token %}<button class="compact outline">Заблокувати</button></form>
+            {% endif %}
+          {% endif %}
+        </td>
+        {% endwith %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+<section class="panel">
+  <h2>Журнал входів</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Час</th><th>Акаунт</th><th>IP</th><th>Результат</th></tr></thead>
+    <tbody>
+      {% for event in events %}
+      <tr><td>{{ event.time|date:"d.m.Y H:i:s" }}</td><td>{{ event.account }}</td><td>{{ event.ip|default:"—" }}</td><td><code>{{ event.result }}</code></td></tr>
+      {% empty %}<tr><td colspan="4">Спроб входу ще немає.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+{% endblock %}
